@@ -1,0 +1,5 @@
+Alina 8,990000
+Sveta 9,990000
+Kamran 1,230000
+Ilya 9,130000
+German 999,200000

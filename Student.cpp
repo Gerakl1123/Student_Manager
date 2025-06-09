@@ -1,4 +1,5 @@
 #include "Student.h"
+#include"Libs.h"
 
 bool Stud::findStudent(const std::string& nameF, const std::string& name, const double& value)
 {
@@ -21,7 +22,6 @@ bool Stud::findStudent(const std::string& nameF, const std::string& name, const 
 		// 
 		auto result = std::find_if(Students.begin(), Students.end(), [&](const Student& other)->bool{ 
 		
-
 			Logger->write("Succeful find student " + name + " " + std::to_string(ballStud));
 			return other.name == name && other.ball == value;
 
@@ -33,7 +33,7 @@ bool Stud::findStudent(const std::string& nameF, const std::string& name, const 
 }
 
 
-// Блок Регестрации и авторизацийй + ХЕШ/DEHASH 
+// Блок Регестрации и авторизацийй + ХЕШ/DEHASH  fix 08.06.2025
 
 void Stud::hashPassword(std::string& password,int shift)
 {
@@ -58,7 +58,7 @@ void Stud::UnHashPassword(std::string& password,int shift)
 
 bool Stud::registerStudent(std::string& login, std::string password)
 {
-	std::ofstream regStud("data.yml", std::ios::app);
+	std::ofstream regStud("data.txt", std::ios::app);
 
 	if (!regStud.is_open())
 	{
@@ -74,14 +74,14 @@ bool Stud::registerStudent(std::string& login, std::string password)
 	}
 	hashPassword(password, 3);
 
-	regStud << login << " " << password;
+	regStud << login << " " << password <<"\n";
 	Logger->write("register account " + login);
 	return true;
 }
 
 bool Stud::loginStudent(std::string& login, std::string password)
 {
-	std::ifstream logStud("data.yml");
+	std::ifstream logStud("data.txt");
 	std::string fileUserName, filePassword;
 
 	if (!logStud.is_open())
@@ -211,16 +211,16 @@ void Stud::uploadReadyFile(const std::string& file)
 	ofile.close();
 }
 
-void Stud::SwapStudents(size_t index, size_t index2)
+void Stud::SwapStudents(size_t index, size_t index2) // optimization
 {
 
-	std::swap(Students[index], Students[index2]);
+	std::swap(Students[index], Students[index2]); // optimization later
 	Logger->write("swap Student!");
 }
 
 void Stud::RezervSort()
 {
-	BackUpStud.assign(Students.begin(), Students.end());
+	BackUpStud.assign(Students.begin(), Students.end()); // good opt
 	BackUpStud.swap(Students);
 
 	Logger->write("BackUp 2x Student!");
@@ -284,10 +284,9 @@ void Stud::DeleteStudentFromFile(const std::string& filename, const std::string&
 			continue;
 
 		}
-		else
-		{
-			filter.push_back(line);
-		}
+			
+			filter.push_back(std::move(line));
+		
 
 	}
 	ifile.close();

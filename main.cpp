@@ -4,7 +4,7 @@
 #include <iterator>
 #include <list>
 #include <crtdbg.h>
-
+#include"lessons.h"
 
 #define _CRTDBG_MAP_ALLOC
 
@@ -24,37 +24,9 @@ int main()
     //std::cout << isZero;
 
     setlocale(LC_ALL, "RU");
-    Stud s("log.yml");
-
-    s.addProject("Math", "900");
-
-
-    std::string log;
-    std::string password;
-    
-    std::getline(std::cin, log);
-    std::getline(std::cin, password);
   
-    s.loginStudent(log, password);
-
-    while (true) {
-        std::cout << "1. Загрузить студентов\n2. Отсортировать\n3. Показать\n4. Откат\n5. Удалить студента\n6. Выйти\n";
-        int choice;
-        std::string name;
-        double ball;
-        std::cin >> choice;
-        switch (choice) {
-        case 1: s.uploadDataToFile("students.txt"); break;
-        case 2: s.uploadInfoStud("students.txt"); break;
-        case 3: s.cast(); break;
-        case 4: s.SortStudent(); break;
-        case 5: s.uploadReadyFile("sort_stud.txt"); break;
-        case 6: s.RezervSort(); break;
-        case 7: s.PrintSortStud("sort_stud.txt"); break;
-        case 8: return 0;
-        }
-    }
-
+  Lessons book("gradeBook.txt");
+  book.setGradeStudent("German", "sort_stud.txt", 4);
 
     _CrtDumpMemoryLeaks();
 

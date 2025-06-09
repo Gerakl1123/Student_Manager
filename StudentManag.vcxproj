@@ -129,12 +129,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="lessons.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Student.cpp" />
-    <ClCompile Include="StudentSort.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="StudntFileMnager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="lessons.h" />
+    <ClInclude Include="Libs.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Student.h" />
     <ClInclude Include="StudntFileMnager.h" />

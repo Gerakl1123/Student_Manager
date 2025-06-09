@@ -1,45 +1,31 @@
 #pragma once
-#include <string>
-#include <vector>
-#include <list>
-#include<fstream>
-#include <sstream>
-#include <algorithm>
-#include <iostream>
-#include<stdexcept>
-#include<map>
-#include<iomanip>
-#include "StudntFileMnager.h"
-#include<cctype>
-#include<unordered_map>
-#include"Logger.h"
+#include"Libs.h"
 
 class StudFileMngr;
 class Stud;
-
+class Lessons;
 class Log;
 
 class Project
 {
+    friend class Lessons;
 public:
     std::string name = "", group = "";
     Project(const std::string& name, const std::string& group)
-    {
-        this->name = name;
-        this->group = group;
-    };
+        : name(name), group(group) { };
 
 };
 
 struct Student
 {
-
-    Student() = default;
-
     std::string name = "";
     double ball = 0.0;
-    Student(const std::string& n, double b) : name(n), ball(b) {};
 
+    
+    Student() = default;
+
+    Student(const std::string& n, double b) : name(n), ball(b) {};
+    
     bool operator<(const Student& other) const {
         return name < other.name;
     }
@@ -58,9 +44,11 @@ struct Student
 class Stud {
     friend class StudFileMngr;
     friend class Project;
-   
+    friend class Lessons;
+
     friend std::ostream& operator <<(std::ostream& os, const Student& other);
-   
+    friend void swap(Stud& lhs, Stud& rhs);
+
 public:
    
     explicit Stud(const std::string& file)
@@ -77,30 +65,20 @@ public:
         os << name << " " << group << " " << ContributionProject->size() << std::endl;
         
     }
+    Stud& operator=(Stud& other)
+    {
+        if (ContributionProject) ContributionProject.reset();
+        if (this != &other)
+        {
+            swap(*this, other);
+        }
+    };
     auto getCount() const
     {
        return ContributionProject.use_count();
     }
 
 
-    Stud& operator=(const Stud& other)
-    {
-        if (ContributionProject)
-        {
-            ContributionProject.reset();
-        }
-        if (this != &other) { 
-            this->info_stud = other.info_stud;
-            this->rezerv_info_stud = other.rezerv_info_stud;
-            this->Students = other.Students;
-            this->BackUpStud = other.BackUpStud;
-            this->Key = other.Key;
-            this->ContributionProject = other.ContributionProject; 
-
-            
-        }
-        return *this;
-    }
     void clearProjects() {
         ContributionProject.reset(); 
     }
@@ -134,3 +112,14 @@ private:
 };
 
 
+inline void swap(Stud& lhs, Stud& rhs)
+{
+
+    using std::swap;
+    swap(lhs.info_stud, rhs.info_stud);
+    swap(lhs.rezerv_info_stud, rhs.rezerv_info_stud);
+    swap(lhs.Students, rhs.Students);
+    swap(lhs.BackUpStud, rhs.BackUpStud);
+    swap(lhs.Key, rhs.Key);
+    swap(lhs.ContributionProject, rhs.ContributionProject);
+}

@@ -14,15 +14,3 @@
 - 🪵 Логирование операций через `Logger`
 
 ---
-
-## 🛠️ Сборка
-
-Проект использует **CMake**.
-
-```bash
-git clone https://github.com/Gerakl1123/Student_Manager.git
-cd Student_Manager
-mkdir build
-cd build
-cmake ..
-make

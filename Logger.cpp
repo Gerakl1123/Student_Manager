@@ -13,7 +13,7 @@ void Log::write(const std::string& msg)
 		std::tm tm;
 		localtime_s(&tm, &t);
 
-		logFile << "[" << std::put_time(&tm, "%Y-%m-%d %H:%M:%S") << "] "<< msg << "\n";\
+		logFile << "[" << std::put_time(&tm, "%Y-%m-%d %H:%M:%S") << "] "<< msg << "\n";
 
 		logFile.flush();
 		if (!logFile)

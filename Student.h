@@ -41,7 +41,7 @@ struct Student
 
 };
 
-class Stud {
+class Stud  {
     friend class StudFileMngr;
     friend class Project;
     friend class Lessons;
@@ -86,7 +86,7 @@ public:
     void cast();
     void SortStudent();
     void uploadReadyFile(const std::string& file);
-    void uploadDataToFile(const std::string& file);
+    void uploadDataToFile(const std::string& file, const std::string& data);
     void SwapStudents(size_t index, size_t index2);
     void RezervSort();
     void PrintSortStud(const std::string& file);

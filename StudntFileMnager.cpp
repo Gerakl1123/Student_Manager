@@ -1,17 +1,10 @@
 #include "StudntFileMnager.h"
 
-void StudFileMngr::CreateDir(std::string& path_dir, const std::string name_ofile, Stud& other, const std::string& fileName)
+void StudFileMngr::CreateDir(std::string& path_dir,const std::string& nameFolder, const std::string nameFileToUploadData, Stud& other, const std::string& fileNameInputData)
 {
 	Logger->write("!!!Used NEW CLASS!!! ");
 
-	std::string nameFolder;
-
-	std::cout << "Enter new name directory: ";
-	std::getline(std::cin >> std::ws, nameFolder); 
-
-	std::cout << "Enter Path: ";
-	std::getline(std::cin, path_dir);
-
+	
 	fs::path folderPath = fs::path(path_dir) / nameFolder;
 
 	if (!fs::exists(folderPath))
@@ -23,12 +16,12 @@ void StudFileMngr::CreateDir(std::string& path_dir, const std::string name_ofile
 
 	}
 
-	path_dir = folderPath.string();
-
-	fs::path newFilePath = folderPath / name_ofile;
+	//path_dir = folderPath.string();
+	 
+	fs::path newFilePath = folderPath / nameFileToUploadData;
 		
 
-	std::ifstream ifile(fileName);
+	std::ifstream ifile(fileNameInputData);
 	std::ofstream ofile(newFilePath);
 
 	if (!ifile.is_open() || !ofile.is_open()) {
@@ -44,7 +37,7 @@ void StudFileMngr::CreateDir(std::string& path_dir, const std::string name_ofile
 	ifile.close();
 
 
-	ofile << "\n# Îáíîâë¸ííûå äàííûå:\n";
+	ofile << "\n# Данные:\n";
 	for (const auto& [name , ball] : other.rezerv_info_stud)
 	{
 		ofile << name << ball <<  "\n";
@@ -52,14 +45,17 @@ void StudFileMngr::CreateDir(std::string& path_dir, const std::string name_ofile
 
 	ofile.close();
 
-	std::cout << "? Ôàéë ñîõðàí¸í: " << newFilePath << "\n";
+	std::cout << "Directore sucefful! " << newFilePath << "\n";
+	std::string pathStr = newFilePath.string();
+
+	Logger->write("StudFileMngr->  SECCUFUL DIRECTORY ! " + pathStr);
+
 }
 
 
 uintmax_t StudFileMngr::SizeFileByte(std::string& path_dir)
 {
-	std::cout << "Enter Path: ";
-	std::getline(std::cin, path_dir);
+
 	uintmax_t Res = fs::file_size(path_dir);
 	return Res;
 	

@@ -140,16 +140,12 @@ void Stud::uploadInfoStud(const std::string& file)
 	ifile.close();
 }
 //Fix
-void Stud::uploadDataToFile(const std::string& file)
+void Stud::uploadDataToFile(const std::string& file,const std::string& data)
 {
 	std::ofstream ofile(file, std::ios::app);
-	std::string data;
-	while (std::getline(std::cin, data))
+	
+	while (data != "0")
 	{
-		if (data == "0")
-		{
-			break;
-		}
 		
 		std::istringstream iss(data);
 		std::string name = "";
@@ -257,7 +253,7 @@ bool Stud::DeleteStudent(size_t index)
 	{
 		Students.erase(Students.begin() + index);
 
-		Logger->write("Seccuful delete Student" + index);
+		Logger->write("Seccuful delete Student" + std::to_string(index));
 		return true;
 	}
 

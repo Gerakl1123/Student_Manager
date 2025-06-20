@@ -10,7 +10,7 @@ std::vector<std::string> Lessons::lesson = {
     "Letarytyre"
 };
 
-void Lessons::setGradeStudent(const std::string& nameStudent, const std::string& fileStudents,double ball)
+void Lessons::setGradeStudent(const std::string& fileStudents,const std::string& less)
 {
     std::ifstream ifile(fileStudents);
     std::string line;
@@ -25,14 +25,12 @@ void Lessons::setGradeStudent(const std::string& nameStudent, const std::string&
 
     }
 
-    auto it = std::find(students.begin(), students.end(), nameStudent);
+    auto it = std::find(students.begin(), students.end(), name);
 
     
     if (it != students.end())
     {
-        std::string less;
-        std::cin >> less;
-
+        
         auto it_2 = std::find(lesson.begin(), lesson.end(), less);
 
         if (it_2 != lesson.end())
@@ -42,7 +40,7 @@ void Lessons::setGradeStudent(const std::string& nameStudent, const std::string&
                 std::cerr << "Failed to open file: " << book << std::endl;
                 return;
             }
-            gradebok << nameStudent << " " << less << " " << std::to_string(ball) << "\n";
+            gradebok << name << " " << less << " " << std::to_string(ball) << "\n";
         }
         else
         {

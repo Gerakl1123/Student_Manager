@@ -13,7 +13,7 @@
 //	Letarytyre
 //}; 
 
-class Lessons
+class Lessons : public Student
 {
 private:
 	short grade=0;
@@ -23,11 +23,11 @@ private:
 	
 public:
 	
-	Lessons(const std::string& NameGradeBook) : book(NameGradeBook)
+	Lessons(const std::string& NameGradeBook,const std::string& nameStudent,double ball) : book(NameGradeBook),Student(nameStudent,ball)
 	{
 
 	};
 
-	void setGradeStudent(const std::string& nameStudent,const std::string& fileStudents,double ball);
+	void setGradeStudent(const std::string& fileStudents ,const std::string& less);
 
 };

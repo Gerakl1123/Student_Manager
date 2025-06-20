@@ -11,12 +11,17 @@ class Log;
 
 class StudFileMngr{
 private:
-	std::shared_ptr<Log> Logger;
-	explicit StudFileMngr(const std::string& file)
-		: Logger(Log::create(file)) {};
+
 public:
 
-	void CreateDir(std::string& path_dir, const std::string name_ofile, Stud& other, const std::string& fileName);
+	std::shared_ptr<Log> Logger;
+	explicit StudFileMngr(const std::string& file)
+		: Logger(Log::create(file)) {
+	};
+
+
+
+	void CreateDir( std::string& path_dir, const std::string& NameFolder,const std::string nameFileToUploadData, Stud& other, const std::string& fileNameInputData);
 	uintmax_t SizeFileByte(std::string& path_dir);
 };
 	

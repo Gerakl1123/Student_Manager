@@ -9,6 +9,7 @@
 class Stud;
 class StudFileMngr;
 
+
 class Log
 {
 	friend class Stud;
@@ -22,9 +23,9 @@ private:
 		logFile.open(nameFile, std::ios::app);
 	};
 
-	
+
 public:
-	
+
 	static std::shared_ptr<Log> create(const std::string& nameFile)
 	{
 		return std::shared_ptr<Log>(new Log(nameFile));

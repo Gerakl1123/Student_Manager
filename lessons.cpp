@@ -10,7 +10,7 @@ std::vector<std::string> Lessons::lesson = {
     "Letarytyre"
 };
 
-void Lessons::setGradeStudent(const std::string& fileStudents,const std::string& less)
+void Lessons::setGradeStudent(const std::string& fileStudents, const std::string& less)
 {
     std::ifstream ifile(fileStudents);
     std::string line;
@@ -27,10 +27,10 @@ void Lessons::setGradeStudent(const std::string& fileStudents,const std::string&
 
     auto it = std::find(students.begin(), students.end(), name);
 
-    
+
     if (it != students.end())
     {
-        
+
         auto it_2 = std::find(lesson.begin(), lesson.end(), less);
 
         if (it_2 != lesson.end())
@@ -44,7 +44,8 @@ void Lessons::setGradeStudent(const std::string& fileStudents,const std::string&
         }
         else
         {
-            return ;
+            std::cerr << "No less!\n";
+            return;
         }
     }
     else
@@ -52,5 +53,5 @@ void Lessons::setGradeStudent(const std::string& fileStudents,const std::string&
         std::cout << " Noy name in file\n";
         return;
     }
-    
+
 }

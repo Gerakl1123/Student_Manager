@@ -1,5 +1,4 @@
 #pragma once
-#include"Logger.h"
 #include<unordered_map>
 #include <string>
 #include <vector>
@@ -11,5 +10,4 @@
 #include<stdexcept>
 #include<map>
 #include<iomanip>
-#include "StudntFileMnager.h"
 #include<cctype>

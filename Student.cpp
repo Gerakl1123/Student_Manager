@@ -14,44 +14,44 @@ bool Stud::findStudent(const std::string& nameF, const std::string& name, const 
 		std::istringstream iss(line);
 		iss >> nameStud >> ballStud;
 		Stud::Students.emplace_back(nameStud, ballStud);
-	
+
 	}
-		//std::pair <std::string, double > Key = {name,value};
-		//old solution
-		//auto result = std::find(Students.begin(), Students.end(), Key);
-		// 
-		auto result = std::find_if(Students.begin(), Students.end(), [&](const Student& other)->bool{ 
-		
-			Logger->write("Succeful find student " + name + " " + std::to_string(ballStud));
-			return other.name == name && other.ball == value;
+	//std::pair <std::string, double > Key = {name,value};
+	//old solution
+	//auto result = std::find(Students.begin(), Students.end(), Key);
+	// 
+	auto result = std::find_if(Students.begin(), Students.end(), [&](const Student& other)->bool {
+
+		Logger->write("Succeful find student " + name + " " + std::to_string(ballStud));
+		return other.name == name && other.ball == value;
 
 		});
-		Logger->write("Fail find student " + name + " " + std::to_string(ballStud));
-		return result != Students.end();
-		
+	Logger->write("Fail find student " + name + " " + std::to_string(ballStud));
+	return result != Students.end();
+
 
 }
 
 
 // Блок Регестрации и авторизацийй + ХЕШ/DEHASH  fix 08.06.2025
 
-void Stud::hashPassword(std::string& password,int shift)
+void Stud::hashPassword(std::string& password, int shift)
 {
 	std::string result = "";
 	for (char c : password) {
 		if (isalpha(c)) {
 			char base = islower(c) ? 'a' : 'A';
-			 result += static_cast<char>((c - base + shift) % 26 + base);
+			result += static_cast<char>((c - base + shift) % 26 + base);
 		}
 		else {
-			result += c; 
+			result += c;
 		}
 	}
 	password = result;
 
 }
 
-void Stud::UnHashPassword(std::string& password,int shift)
+void Stud::UnHashPassword(std::string& password, int shift)
 {
 	hashPassword(password, 26 - shift % 26);
 }
@@ -74,7 +74,7 @@ bool Stud::registerStudent(std::string& login, std::string password)
 	}
 	hashPassword(password, 3);
 
-	regStud << login << " " << password <<"\n";
+	regStud << login << " " << password << "\n";
 	Logger->write("register account " + login);
 	return true;
 }
@@ -104,7 +104,7 @@ bool Stud::loginStudent(std::string& login, std::string password)
 
 		iss >> fileUserName >> filePassword;
 		UnHashPassword(filePassword, 3);
-			
+
 		if (login == fileUserName && password == filePassword)
 		{
 			std::cout << " Suceful!";
@@ -140,19 +140,19 @@ void Stud::uploadInfoStud(const std::string& file)
 	ifile.close();
 }
 //Fix
-void Stud::uploadDataToFile(const std::string& file,const std::string& data)
+void Stud::uploadDataToFile(const std::string& file, const std::string& data)
 {
 	std::ofstream ofile(file, std::ios::app);
-	
+
 	while (data != "0")
 	{
-		
+
 		std::istringstream iss(data);
 		std::string name = "";
 		double ball = 0.0;
 		iss >> name >> ball;
 
-		ofile<<name << " " << std::to_string(ball) << "\n";
+		ofile << name << " " << std::to_string(ball) << "\n";
 		Logger->write("Student sucewfful " + name + std::to_string(ball));
 
 	}
@@ -165,13 +165,13 @@ void Stud::SortStudent()
 
 	std::sort(Students.begin(), Students.end(), [](const Student& a, const Student& b) {
 		return a.ball > b.ball;
-	});
+		});
 
 	rezerv_info_stud.clear();
 	Stud::i = 0;
 	for (const auto& st : Students)
 	{
-		rezerv_info_stud.emplace(st.name ,st.ball);
+		rezerv_info_stud.emplace(st.name, st.ball);
 	}
 
 	Logger->write("Sorsted Seccuful!");
@@ -232,10 +232,10 @@ void Stud::PrintSortStud(const std::string& file)
 	{
 		std::istringstream iss(line);
 		Student s;
-		if (iss>>s.name>>s.ball)
+		if (iss >> s.name >> s.ball)
 		{
 			Key[id++] = s;
-		}	
+		}
 	}
 	for (const auto& [k, stud] : Key)
 	{
@@ -266,23 +266,23 @@ void Stud::DeleteStudentFromFile(const std::string& filename, const std::string&
 	std::ifstream ifile(filename);
 	std::string line;
 	std::list<std::string> filter;
-	std::string index,name;
+	std::string index, name;
 	double ball = 0.0;
 
-	while (std::getline(ifile,line))
+	while (std::getline(ifile, line))
 	{
 
 		std::istringstream iss(line);
-		iss>>index >> name >> ball;
+		iss >> index >> name >> ball;
 		if (name == targetName && ball == targetBall)
 		{
 			Logger->write("Deleted Student from file " + targetName + " " + std::to_string(targetBall));
 			continue;
 
 		}
-			
-			filter.push_back(std::move(line));
-		
+
+		filter.push_back(std::move(line));
+
 
 	}
 	ifile.close();
@@ -290,7 +290,7 @@ void Stud::DeleteStudentFromFile(const std::string& filename, const std::string&
 	std::ofstream ofile(filename, std::ios::trunc);
 	for (const auto& s : filter)
 	{
-		ofile << s << "\n";	
+		ofile << s << "\n";
 	}
 	ofile.close();
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include"Libs.h"
+#include"Logger.h"
 
 class StudFileMngr;
 class Stud;
@@ -12,7 +13,8 @@ class Project
 public:
     std::string name = "", group = "";
     Project(const std::string& name, const std::string& group)
-        : name(name), group(group) { };
+        : name(name), group(group) {
+    };
 
 };
 
@@ -21,27 +23,39 @@ struct Student
     std::string name = "";
     double ball = 0.0;
 
-    
+
     Student() = default;
 
     Student(const std::string& n, double b) : name(n), ball(b) {};
-    
+
     bool operator<(const Student& other) const {
         return name < other.name;
     }
 
-    bool operator==(const Student& other) const {
+    bool operator==(const Student& other)  {
         return name == other.name && ball == other.ball;
     }
 
+    
     friend bool operator==(const Student& s, const std::pair<std::string, double>& item)
     {
         return s.name == item.first && s.ball == item.second;
     }
 
+    friend std::ostream& operator<<(std::ostream& is, Student& other)
+    {
+        is << other.name << other.ball;
+        return is;
+    }
+    Student operator+(Student& other) const
+    {
+        Student temp;
+        return Student(name + " " + other.name, ball + other.ball);
+    }
+
 };
 
-class Stud  {
+class Stud {
     friend class StudFileMngr;
     friend class Project;
     friend class Lessons;
@@ -50,20 +64,21 @@ class Stud  {
     friend void swap(Stud& lhs, Stud& rhs);
 
 public:
-   
+
     explicit Stud(const std::string& file)
         : Logger(Log::create(file)),
         ContributionProject(std::make_shared<std::vector<Project>>())
-    {};
+    {
+    };
 
     Stud() = delete;
-    
+
     void addProject(const std::string& name, const std::string& group)
     {
         ContributionProject->emplace_back(name, group); // push_back({name,group});
         std::ofstream os("Project.txt", std::ios::app);
         os << name << " " << group << " " << ContributionProject->size() << std::endl;
-        
+
     }
     Stud& operator=(Stud& other)
     {
@@ -75,12 +90,12 @@ public:
     };
     auto getCount() const
     {
-       return ContributionProject.use_count();
+        return ContributionProject.use_count();
     }
 
 
     void clearProjects() {
-        ContributionProject.reset(); 
+        ContributionProject.reset();
     }
     void uploadInfoStud(const std::string& file);
     void cast();
@@ -101,7 +116,7 @@ private:
     void hashPassword(std::string& password, int shift);
     void UnHashPassword(std::string& password, int shift);
     std::list<std::string> info_stud;
-    std::unordered_map<std::string,double> rezerv_info_stud;
+    std::unordered_map<std::string, double> rezerv_info_stud;
     std::vector<Student> Students;
     std::vector<Student> BackUpStud;
     std::map<size_t, Student> Key;

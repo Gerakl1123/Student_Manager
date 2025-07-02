@@ -1,11 +1,13 @@
-#include "StudntFileMnager.h"
+﻿#include "StudntFileMnager.h"   
+#include "Student.h"
+#include "Logger.h"
 
-void StudFileMngr::CreateDir(std::string& path_dir,const std::string& nameFolder, const std::string nameFileToUploadData, Stud& other, const std::string& fileNameInputData)
+void StudFileMngr::CreateDir(std::string& path_dir, const std::string& NameFolder, const std::string nameFileToUploadData, Stud& other, const std::string& fileNameInputData) const
 {
 	Logger->write("!!!Used NEW CLASS!!! ");
 
-	
-	fs::path folderPath = fs::path(path_dir) / nameFolder;
+
+	fs::path folderPath = fs::path(path_dir) / NameFolder;
 
 	if (!fs::exists(folderPath))
 	{
@@ -17,9 +19,9 @@ void StudFileMngr::CreateDir(std::string& path_dir,const std::string& nameFolder
 	}
 
 	//path_dir = folderPath.string();
-	 
+
 	fs::path newFilePath = folderPath / nameFileToUploadData;
-		
+
 
 	std::ifstream ifile(fileNameInputData);
 	std::ofstream ofile(newFilePath);
@@ -38,9 +40,9 @@ void StudFileMngr::CreateDir(std::string& path_dir,const std::string& nameFolder
 
 
 	ofile << "\n# Данные:\n";
-	for (const auto& [name , ball] : other.rezerv_info_stud)
+	for (const auto& [name, ball] : other.rezerv_info_stud)
 	{
-		ofile << name << ball <<  "\n";
+		ofile << name << ball << "\n";
 	}
 
 	ofile.close();
@@ -52,11 +54,10 @@ void StudFileMngr::CreateDir(std::string& path_dir,const std::string& nameFolder
 
 }
 
-
 uintmax_t StudFileMngr::SizeFileByte(std::string& path_dir)
 {
 
 	uintmax_t Res = fs::file_size(path_dir);
 	return Res;
-	
+
 }
